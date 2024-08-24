@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bevcht6q7x2cs"]
+[gd_scene load_steps=11 format=3 uid="uid://bevcht6q7x2cs"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_ermoe"]
 [ext_resource type="PackedScene" uid="uid://cbaa2gbqceacn" path="res://bird.tscn" id="3_abk4j"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bu37x5a6ktqg1" path="res://ammo.tscn" id="5_6gf1k"]
 [ext_resource type="Texture2D" uid="uid://b5dyfg8kiq4jo" path="res://assets/missile.png" id="5_i0i7u"]
 [ext_resource type="PackedScene" uid="uid://cy7s0mnl6b7ge" path="res://life_bar.tscn" id="7_5v04i"]
+[ext_resource type="PackedScene" uid="uid://c2jlw5xgv0d0d" path="res://menu.tscn" id="8_ba5wn"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_1kw80"]
 
@@ -14,6 +15,7 @@
 distance = 1.0
 
 [node name="Game" type="Node2D"]
+process_mode = 1
 script = ExtResource("1_ermoe")
 pipe_scene = ExtResource("5_4efw6")
 missile_scene = ExtResource("3_adulu")
@@ -119,8 +121,12 @@ texture = ExtResource("5_i0i7u")
 [node name="LifeBar" parent="." instance=ExtResource("7_5v04i")]
 position = Vector2(368, -300)
 
+[node name="Menu" parent="." instance=ExtResource("8_ba5wn")]
+visible = false
+
 [connection signal="collected_ammo" from="Bird" to="." method="_on_bird_collected_ammo"]
 [connection signal="missile_launched" from="Bird" to="." method="_on_bird_missile_launched"]
 [connection signal="took_damage" from="Bird" to="." method="_on_bird_took_damage"]
 [connection signal="timeout" from="PipeTimer" to="." method="_on_pipe_timer_timeout"]
 [connection signal="timeout" from="AmmoTimer" to="." method="_on_ammo_timer_timeout"]
+[connection signal="game_start" from="Menu" to="." method="_on_menu_game_start"]

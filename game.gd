@@ -16,6 +16,7 @@ var hp = 5
 @onready var pipe_timer: Timer = $PipeTimer
 @onready var ammo_timer: Timer = $AmmoTimer
 @onready var life_bar: LifeBar = $LifeBar
+@onready var menu: CanvasLayer = $Menu
 
 
 # Called when the node enters the scene tree for the first time.
@@ -23,6 +24,8 @@ func _ready() -> void:
 	reference.queue_free()
 	ammo_timer.start(pipe_timer.wait_time + pipe_timer.wait_time/2.0)
 	life_bar.paint(hp)
+	menu.visible = true
+	get_tree().paused = true
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -100,4 +103,11 @@ func _on_ammo_timer_timeout() -> void:
 func _on_bird_took_damage() -> void:
 	hp -= 1
 	life_bar.paint(hp)
+	if hp <= 0:
+		get_tree().reload_current_scene()
+		
+	pass # Replace with function body.
+
+
+func _on_menu_game_start() -> void:	
 	pass # Replace with function body.
