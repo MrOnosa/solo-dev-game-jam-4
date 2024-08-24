@@ -1,8 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://bevcht6q7x2cs"]
+[gd_scene load_steps=10 format=3 uid="uid://bevcht6q7x2cs"]
 
+[ext_resource type="Script" path="res://game.gd" id="1_ermoe"]
 [ext_resource type="Script" path="res://bird.gd" id="1_jx2b8"]
 [ext_resource type="Texture2D" uid="uid://ddrgx6ro08nr7" path="res://assets/REPLACE_ME/ChickBase_400_1.png" id="1_lp1vb"]
 [ext_resource type="Texture2D" uid="uid://dga2583x7omq8" path="res://assets/REPLACE_ME/ChickBase_400_2.png" id="2_jb0eg"]
+[ext_resource type="PackedScene" uid="uid://1ilxivmlmw1c" path="res://pipe.tscn" id="5_4efw6"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_x0wxs"]
 animations = [{
@@ -27,16 +29,24 @@ radius = 93.0484
 distance = 1.0
 
 [node name="Game" type="Node2D"]
+script = ExtResource("1_ermoe")
+pipe = ExtResource("5_4efw6")
 
 [node name="Bird" type="RigidBody2D" parent="."]
+position = Vector2(-416, -178)
+collision_layer = 3
+contact_monitor = true
+max_contacts_reported = 10
 script = ExtResource("1_jx2b8")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Bird"]
+scale = Vector2(0.493504, 0.493504)
 sprite_frames = SubResource("SpriteFrames_x0wxs")
 autoplay = "default"
-frame_progress = 0.59129
+frame_progress = 0.197491
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bird"]
+scale = Vector2(0.529171, 0.529171)
 shape = SubResource("CircleShape2D_sjbfb")
 
 [node name="Button1CooloffTimer" type="Timer" parent="Bird"]
@@ -46,16 +56,34 @@ wait_time = 0.3
 wait_time = 0.3
 
 [node name="Camera2D" type="Camera2D" parent="."]
+metadata/_edit_lock_ = true
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="Boundries" type="StaticBody2D" parent="."]
+metadata/_edit_lock_ = true
 
-[node name="Floor" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="Floor" type="CollisionShape2D" parent="Boundries"]
 position = Vector2(0, 324)
 shape = SubResource("WorldBoundaryShape2D_1kw80")
 
-[node name="Ceiling" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="Ceiling" type="CollisionShape2D" parent="Boundries"]
 position = Vector2(0, -324)
 scale = Vector2(1, -1)
 shape = SubResource("WorldBoundaryShape2D_ytymf")
 
+[node name="Obstacles" type="Node2D" parent="."]
+
+[node name="PipeTimer" type="Timer" parent="."]
+wait_time = 1.5
+autostart = true
+
+[node name="Reference" type="Node2D" parent="."]
+
+[node name="PipeTop" parent="Reference" instance=ExtResource("5_4efw6")]
+position = Vector2(500, -1600)
+
+[node name="PipeBottom" parent="Reference" instance=ExtResource("5_4efw6")]
+position = Vector2(490, -50)
+
+[connection signal="body_entered" from="Bird" to="Bird" method="_on_body_entered"]
 [connection signal="timeout" from="Bird/Button1CooloffTimer" to="Bird" method="_on_button_1_cooloff_timer_timeout"]
+[connection signal="timeout" from="PipeTimer" to="." method="_on_pipe_timer_timeout"]

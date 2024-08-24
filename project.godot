@@ -10,10 +10,14 @@ config_version=5
 
 [application]
 
-config/name="New Game Project"
+config/name="Solo Dev Game Jam 4"
 run/main_scene="res://game.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.svg"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/kanban_tasks/plugin.cfg", "res://addons/ridiculous_coding/plugin.cfg")
 
 [input]
 

@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=3 uid="uid://1ilxivmlmw1c"]
+
+[ext_resource type="Script" path="res://pipe.gd" id="1_kplkq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6ndqw"]
+size = Vector2(140, 1000)
+
+[node name="Pipe" type="RigidBody2D"]
+collision_layer = 2
+collision_mask = 2
+gravity_scale = 0.0
+script = ExtResource("1_kplkq")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+position = Vector2(0, 1040)
+color = Color(0.360784, 0.568627, 0.231373, 1)
+offset = Vector2(0, -24)
+polygon = PackedVector2Array(-70, -16, -70, -1016, 70, -1016, 70, -16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 500)
+shape = SubResource("RectangleShape2D_6ndqw")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(0, 500)
+scale = Vector2(7, 50)
+
+[node name="DeathClockTimer" type="Timer" parent="."]
+
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
+[connection signal="timeout" from="DeathClockTimer" to="." method="_on_death_clock_timer_timeout"]
