@@ -73,9 +73,9 @@ scale = Vector2(0.9, 1)
 [node name="Ammo" type="Control" parent="HUD"]
 anchors_preset = 0
 offset_left = 388.889
-offset_top = -270.0
+offset_top = -273.0
 offset_right = 428.889
-offset_bottom = -230.0
+offset_bottom = -233.0
 
 [node name="TextureRect" type="TextureRect" parent="HUD/Ammo"]
 layout_mode = 0

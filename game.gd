@@ -5,7 +5,7 @@ class_name Game
 @export var missile_scene : PackedScene
 @export var ammo_scene : PackedScene
 var inital_pipe_position : Vector2 = Vector2(600.0, 304.0)
-var ammo = 6
+var ammo = 0
 var hp = 5
 
 @onready var bird: Bird = $Bird
