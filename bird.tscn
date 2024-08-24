@@ -1,0 +1,47 @@
+[gd_scene load_steps=6 format=3 uid="uid://cbaa2gbqceacn"]
+
+[ext_resource type="Script" path="res://bird.gd" id="1_t3uc3"]
+[ext_resource type="Texture2D" uid="uid://ddrgx6ro08nr7" path="res://assets/REPLACE_ME/ChickBase_400_1.png" id="2_2l86v"]
+[ext_resource type="Texture2D" uid="uid://dga2583x7omq8" path="res://assets/REPLACE_ME/ChickBase_400_2.png" id="3_nvuyw"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_x0wxs"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_2l86v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_nvuyw")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_sjbfb"]
+radius = 93.0484
+
+[node name="Bird" type="RigidBody2D"]
+collision_layer = 3
+contact_monitor = true
+max_contacts_reported = 10
+script = ExtResource("1_t3uc3")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.493504, 0.493504)
+sprite_frames = SubResource("SpriteFrames_x0wxs")
+autoplay = "default"
+frame_progress = 0.197491
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.529171, 0.529171)
+shape = SubResource("CircleShape2D_sjbfb")
+
+[node name="Button1CooloffTimer" type="Timer" parent="."]
+wait_time = 0.3
+
+[node name="Button2CooloffTimer" type="Timer" parent="."]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="Button1CooloffTimer" to="." method="_on_button_1_cooloff_timer_timeout"]
+[connection signal="timeout" from="Button2CooloffTimer" to="." method="_on_button_2_cooloff_timer_timeout"]

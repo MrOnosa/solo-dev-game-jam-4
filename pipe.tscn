@@ -9,6 +9,10 @@ size = Vector2(140, 1000)
 collision_layer = 2
 collision_mask = 2
 gravity_scale = 0.0
+contact_monitor = true
+max_contacts_reported = 10
+linear_velocity = Vector2(-300, 0)
+linear_damp_mode = 1
 script = ExtResource("1_kplkq")
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
@@ -27,6 +31,7 @@ scale = Vector2(7, 50)
 
 [node name="DeathClockTimer" type="Timer" parent="."]
 
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
 [connection signal="timeout" from="DeathClockTimer" to="." method="_on_death_clock_timer_timeout"]

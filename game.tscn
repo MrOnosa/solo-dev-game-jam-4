@@ -1,27 +1,12 @@
 [gd_scene load_steps=10 format=3 uid="uid://bevcht6q7x2cs"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_ermoe"]
-[ext_resource type="Script" path="res://bird.gd" id="1_jx2b8"]
-[ext_resource type="Texture2D" uid="uid://ddrgx6ro08nr7" path="res://assets/REPLACE_ME/ChickBase_400_1.png" id="1_lp1vb"]
-[ext_resource type="Texture2D" uid="uid://dga2583x7omq8" path="res://assets/REPLACE_ME/ChickBase_400_2.png" id="2_jb0eg"]
+[ext_resource type="PackedScene" uid="uid://cbaa2gbqceacn" path="res://bird.tscn" id="3_abk4j"]
+[ext_resource type="PackedScene" uid="uid://bia3dgnvtdq5s" path="res://missile.tscn" id="3_adulu"]
 [ext_resource type="PackedScene" uid="uid://1ilxivmlmw1c" path="res://pipe.tscn" id="5_4efw6"]
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_x0wxs"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("1_lp1vb")
-}, {
-"duration": 1.0,
-"texture": ExtResource("2_jb0eg")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_sjbfb"]
-radius = 93.0484
+[ext_resource type="PackedScene" uid="uid://bu37x5a6ktqg1" path="res://ammo.tscn" id="5_6gf1k"]
+[ext_resource type="Texture2D" uid="uid://b5dyfg8kiq4jo" path="res://assets/missile.png" id="5_i0i7u"]
+[ext_resource type="PackedScene" uid="uid://cy7s0mnl6b7ge" path="res://life_bar.tscn" id="7_5v04i"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_1kw80"]
 
@@ -30,30 +15,12 @@ distance = 1.0
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_ermoe")
-pipe = ExtResource("5_4efw6")
+pipe_scene = ExtResource("5_4efw6")
+missile_scene = ExtResource("3_adulu")
+ammo_scene = ExtResource("5_6gf1k")
 
-[node name="Bird" type="RigidBody2D" parent="."]
-position = Vector2(-416, -178)
-collision_layer = 3
-contact_monitor = true
-max_contacts_reported = 10
-script = ExtResource("1_jx2b8")
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Bird"]
-scale = Vector2(0.493504, 0.493504)
-sprite_frames = SubResource("SpriteFrames_x0wxs")
-autoplay = "default"
-frame_progress = 0.197491
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Bird"]
-scale = Vector2(0.529171, 0.529171)
-shape = SubResource("CircleShape2D_sjbfb")
-
-[node name="Button1CooloffTimer" type="Timer" parent="Bird"]
-wait_time = 0.3
-
-[node name="Button2CooloffTimer" type="Timer" parent="Bird"]
-wait_time = 0.3
+[node name="Bird" parent="." instance=ExtResource("3_abk4j")]
+position = Vector2(-416, 0)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 metadata/_edit_lock_ = true
@@ -76,6 +43,12 @@ shape = SubResource("WorldBoundaryShape2D_ytymf")
 wait_time = 1.5
 autostart = true
 
+[node name="AmmoTimer" type="Timer" parent="."]
+wait_time = 1.5
+autostart = true
+
+[node name="PowerUps" type="Node2D" parent="."]
+
 [node name="Reference" type="Node2D" parent="."]
 
 [node name="PipeTop" parent="Reference" instance=ExtResource("5_4efw6")]
@@ -84,6 +57,70 @@ position = Vector2(500, -1600)
 [node name="PipeBottom" parent="Reference" instance=ExtResource("5_4efw6")]
 position = Vector2(490, -50)
 
-[connection signal="body_entered" from="Bird" to="Bird" method="_on_body_entered"]
-[connection signal="timeout" from="Bird/Button1CooloffTimer" to="Bird" method="_on_button_1_cooloff_timer_timeout"]
+[node name="Missiles" type="Node2D" parent="."]
+
+[node name="HUD" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(0.9, 1)
+
+[node name="Ammo" type="Control" parent="HUD"]
+anchors_preset = 0
+offset_left = 388.889
+offset_top = -270.0
+offset_right = 428.889
+offset_bottom = -230.0
+
+[node name="TextureRect4" type="TextureRect" parent="HUD/Ammo"]
+layout_mode = 0
+offset_top = -30.0
+offset_right = 64.0
+offset_bottom = 34.0
+texture = ExtResource("5_i0i7u")
+
+[node name="TextureRect5" type="TextureRect" parent="HUD/Ammo"]
+layout_mode = 0
+offset_left = 81.1111
+offset_top = -30.0
+offset_right = 145.111
+offset_bottom = 34.0
+texture = ExtResource("5_i0i7u")
+
+[node name="TextureRect6" type="TextureRect" parent="HUD/Ammo"]
+layout_mode = 0
+offset_left = 160.0
+offset_top = -30.0
+offset_right = 224.0
+offset_bottom = 34.0
+texture = ExtResource("5_i0i7u")
+
+[node name="TextureRect" type="TextureRect" parent="HUD/Ammo"]
+layout_mode = 0
+offset_right = 64.0
+offset_bottom = 64.0
+texture = ExtResource("5_i0i7u")
+
+[node name="TextureRect2" type="TextureRect" parent="HUD/Ammo"]
+layout_mode = 0
+offset_left = 81.0
+offset_right = 145.0
+offset_bottom = 64.0
+texture = ExtResource("5_i0i7u")
+
+[node name="TextureRect3" type="TextureRect" parent="HUD/Ammo"]
+layout_mode = 0
+offset_left = 160.0
+offset_right = 224.0
+offset_bottom = 64.0
+texture = ExtResource("5_i0i7u")
+
+[node name="LifeBar" parent="." instance=ExtResource("7_5v04i")]
+position = Vector2(368, -300)
+
+[connection signal="collected_ammo" from="Bird" to="." method="_on_bird_collected_ammo"]
+[connection signal="missile_launched" from="Bird" to="." method="_on_bird_missile_launched"]
+[connection signal="took_damage" from="Bird" to="." method="_on_bird_took_damage"]
 [connection signal="timeout" from="PipeTimer" to="." method="_on_pipe_timer_timeout"]
+[connection signal="timeout" from="AmmoTimer" to="." method="_on_ammo_timer_timeout"]

@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://bu37x5a6ktqg1"]
+
+[ext_resource type="Texture2D" uid="uid://cece4jitioyfb" path="res://assets/ammo-power-up.png" id="1_mqhyc"]
+[ext_resource type="Script" path="res://ammo.gd" id="1_ywo7m"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xxjdq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_mqhyc")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_viqq0"]
+radius = 25.0
+
+[node name="Ammo" type="RigidBody2D"]
+collision_layer = 0
+gravity_scale = 0.0
+contact_monitor = true
+max_contacts_reported = 10
+linear_velocity = Vector2(-300, 0)
+linear_damp_mode = 1
+script = ExtResource("1_ywo7m")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_xxjdq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_viqq0")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
