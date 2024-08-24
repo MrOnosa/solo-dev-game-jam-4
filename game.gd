@@ -5,7 +5,7 @@ class_name Game
 @export var missile_scene : PackedScene
 @export var ammo_scene : PackedScene
 var inital_pipe_position : Vector2 = Vector2(600.0, 304.0)
-var ammo = 3
+var ammo = 6
 var hp = 5
 
 @onready var bird: Bird = $Bird
@@ -17,11 +17,15 @@ var hp = 5
 @onready var ammo_timer: Timer = $AmmoTimer
 @onready var life_bar: LifeBar = $LifeBar
 @onready var menu: CanvasLayer = $Menu
+@onready var hud: Control = $HUD
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	reference.queue_free()
+	life_bar.visible = false
+	hud.visible = false
+	bird.visible = false
 	ammo_timer.start(pipe_timer.wait_time + pipe_timer.wait_time/2.0)
 	life_bar.paint(hp)
 	menu.visible = true
@@ -44,17 +48,6 @@ func _physics_process(delta: float) -> void:
 	
 func _on_pipe_died() -> void:
 	pass
-	#var newPipe = pipe.instantiate()
-	#newPipe.position = inital_pipe_position
-	#newPipe.died.connect(_on_pipe_died)
-	#obstacles.add_child(newPipe)
-
-
-#func _on_bird_body_entered(body: Node) -> void:
-	#if body is Pipe:
-		#bird.any_collision_occured = true
-		#print_rich("[color=red]Ouch!")
-	#pass # Replace with function body.
 
 
 func _on_pipe_timer_timeout() -> void:	
@@ -108,6 +101,7 @@ func _on_bird_took_damage() -> void:
 		
 	pass # Replace with function body.
 
-
 func _on_menu_game_start() -> void:	
-	pass # Replace with function body.
+	life_bar.visible = true
+	hud.visible = true
+	bird.visible = true

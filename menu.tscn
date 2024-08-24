@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://c2jlw5xgv0d0d"]
+[gd_scene load_steps=14 format=3 uid="uid://c2jlw5xgv0d0d"]
 
 [ext_resource type="Script" path="res://menu.gd" id="1_moqug"]
 [ext_resource type="Texture2D" uid="uid://d31ejslsw8kso" path="res://assets/menu-frame.png" id="1_qfoi4"]
 [ext_resource type="Texture2D" uid="uid://8q2ea7gkt6kr" path="res://assets/bird-Sheet.png" id="1_x02o7"]
 [ext_resource type="Texture2D" uid="uid://cmdkyrm71has4" path="res://assets/arrow.png" id="4_g3x2k"]
+[ext_resource type="Texture2D" uid="uid://ysd832a6ih3b" path="res://assets/computer-mouse-Sheet.png" id="5_cc6mw"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_rn47m"]
 animations = [{
@@ -38,6 +39,35 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_oipv3"]
+atlas = ExtResource("5_cc6mw")
+region = Rect2(0, 0, 215, 215)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_go5g8"]
+atlas = ExtResource("5_cc6mw")
+region = Rect2(215, 0, 215, 215)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t53qr"]
+atlas = ExtResource("5_cc6mw")
+region = Rect2(430, 0, 215, 215)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_f1nff"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oipv3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_go5g8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t53qr")
+}],
+"loop": true,
+"name": &"default",
+"speed": 1.0
+}]
+
 [node name="Menu" type="CanvasLayer"]
 process_mode = 2
 script = ExtResource("1_moqug")
@@ -58,3 +88,8 @@ frame_progress = 0.604388
 [node name="Arrow" type="Sprite2D" parent="."]
 position = Vector2(570, 350)
 texture = ExtResource("4_g3x2k")
+
+[node name="ComputerMouse" type="AnimatedSprite2D" parent="."]
+position = Vector2(880, 380)
+sprite_frames = SubResource("SpriteFrames_f1nff")
+autoplay = "default"

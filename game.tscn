@@ -64,8 +64,10 @@ position = Vector2(490, -50)
 [node name="HUD" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = -909.0
+offset_top = 488.0
+offset_right = -869.0
+offset_bottom = 528.0
 scale = Vector2(0.9, 1)
 
 [node name="Ammo" type="Control" parent="HUD"]
@@ -75,51 +77,52 @@ offset_top = -270.0
 offset_right = 428.889
 offset_bottom = -230.0
 
-[node name="TextureRect4" type="TextureRect" parent="HUD/Ammo"]
-layout_mode = 0
-offset_top = -30.0
-offset_right = 64.0
-offset_bottom = 34.0
-texture = ExtResource("5_i0i7u")
-
-[node name="TextureRect5" type="TextureRect" parent="HUD/Ammo"]
-layout_mode = 0
-offset_left = 81.1111
-offset_top = -30.0
-offset_right = 145.111
-offset_bottom = 34.0
-texture = ExtResource("5_i0i7u")
-
-[node name="TextureRect6" type="TextureRect" parent="HUD/Ammo"]
-layout_mode = 0
-offset_left = 160.0
-offset_top = -30.0
-offset_right = 224.0
-offset_bottom = 34.0
-texture = ExtResource("5_i0i7u")
-
 [node name="TextureRect" type="TextureRect" parent="HUD/Ammo"]
 layout_mode = 0
 offset_right = 64.0
 offset_bottom = 64.0
 texture = ExtResource("5_i0i7u")
 
+[node name="TextureRect4" type="TextureRect" parent="HUD/Ammo"]
+layout_mode = 0
+offset_top = -28.0
+offset_right = 64.0
+offset_bottom = 36.0
+texture = ExtResource("5_i0i7u")
+
+[node name="TextureRect5" type="TextureRect" parent="HUD/Ammo"]
+layout_mode = 0
+offset_top = -58.0
+offset_right = 64.0
+offset_bottom = 6.0
+texture = ExtResource("5_i0i7u")
+
+[node name="TextureRect6" type="TextureRect" parent="HUD/Ammo"]
+layout_mode = 0
+offset_left = 21.1111
+offset_top = 10.0
+offset_right = 85.1111
+offset_bottom = 74.0
+texture = ExtResource("5_i0i7u")
+
 [node name="TextureRect2" type="TextureRect" parent="HUD/Ammo"]
 layout_mode = 0
-offset_left = 81.0
-offset_right = 145.0
-offset_bottom = 64.0
+offset_left = 21.1111
+offset_top = -18.0
+offset_right = 85.1111
+offset_bottom = 46.0
 texture = ExtResource("5_i0i7u")
 
 [node name="TextureRect3" type="TextureRect" parent="HUD/Ammo"]
 layout_mode = 0
-offset_left = 160.0
-offset_right = 224.0
-offset_bottom = 64.0
+offset_left = 21.1111
+offset_top = -48.0
+offset_right = 85.1111
+offset_bottom = 16.0
 texture = ExtResource("5_i0i7u")
 
 [node name="LifeBar" parent="." instance=ExtResource("7_5v04i")]
-position = Vector2(368, -300)
+position = Vector2(-544, 286)
 
 [node name="Menu" parent="." instance=ExtResource("8_ba5wn")]
 visible = false
