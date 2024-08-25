@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bevcht6q7x2cs"]
+[gd_scene load_steps=24 format=3 uid="uid://bevcht6q7x2cs"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_ermoe"]
 [ext_resource type="PackedScene" uid="uid://cbaa2gbqceacn" path="res://bird.tscn" id="3_abk4j"]
@@ -6,13 +6,189 @@
 [ext_resource type="PackedScene" uid="uid://1ilxivmlmw1c" path="res://pipe.tscn" id="5_4efw6"]
 [ext_resource type="PackedScene" uid="uid://bu37x5a6ktqg1" path="res://ammo.tscn" id="5_6gf1k"]
 [ext_resource type="Texture2D" uid="uid://b5dyfg8kiq4jo" path="res://assets/missile.png" id="5_i0i7u"]
+[ext_resource type="PackedScene" uid="uid://c2ebhq5vsagjd" path="res://frog.tscn" id="5_tt1gm"]
+[ext_resource type="PackedScene" uid="uid://dp62nqhw1k8c5" path="res://betrothed_frog.tscn" id="6_nl2av"]
 [ext_resource type="PackedScene" uid="uid://cy7s0mnl6b7ge" path="res://life_bar.tscn" id="7_5v04i"]
 [ext_resource type="PackedScene" uid="uid://c2jlw5xgv0d0d" path="res://menu.tscn" id="8_ba5wn"]
+[ext_resource type="Texture2D" uid="uid://c4tqw6a11yj4p" path="res://assets/frog-outline.png" id="9_8h7oe"]
+[ext_resource type="Texture2D" uid="uid://ccktqpccapld" path="res://assets/frog-blushing.png" id="10_2grpk"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_1kw80"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ytymf"]
 distance = 1.0
+
+[sub_resource type="Shader" id="Shader_jidby"]
+code = "shader_type canvas_item;
+
+// Speed of the color rotation (settable from the editor)
+uniform float speed = -0.3;
+
+// Width of the rainbow stripes (affects how many stripes fit across the sprite width)
+uniform float stripe_width = 5.2;
+
+// Control the size of the pixelation (the larger the value, the more pixelated it looks)
+uniform float pixel_size = 8.0;
+
+uniform bool enabled = false;
+
+void fragment() {
+	if(enabled)
+	{
+	    // Get the UV coordinates (position on the sprite)
+	    vec2 uv = UV;
+
+	    // Snap UVs to create the pixelation effect
+	    uv = floor(uv * pixel_size) / pixel_size;
+		
+	    // Calculate time-based shift for rotating the colors
+	    float time_shift = TIME * speed;
+
+	    // Calculate the hue using sine waves and UV coordinates to create the horizontal stripes
+	    float hue = fract(uv.y / stripe_width + time_shift);
+
+	    // Convert hue to RGB for the rainbow effect
+	    vec3 color = vec3(abs(sin(hue * 6.28318)), abs(sin((hue + 0.33) * 6.28318)), abs(sin((hue + 0.66) * 6.28318)));
+
+	    // Get the original sprite's alpha for transparency
+	    vec4 texture_color = texture(TEXTURE, UV);
+
+	    // Output the final color with the original sprite's alpha
+	    COLOR = vec4(color, texture_color.a);
+	}
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_f3wih"]
+shader = SubResource("Shader_jidby")
+shader_parameter/speed = -0.3
+shader_parameter/stripe_width = 5.2
+shader_parameter/pixel_size = 8.0
+shader_parameter/enabled = false
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qoix6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_8h7oe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_2grpk")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wpahs"]
+shader = SubResource("Shader_jidby")
+shader_parameter/speed = -0.3
+shader_parameter/stripe_width = 5.2
+shader_parameter/pixel_size = 8.0
+shader_parameter/enabled = false
+
+[sub_resource type="Shader" id="Shader_hyqkx"]
+code = "shader_type canvas_item;
+
+// Speed of the color rotation (settable from the editor)
+uniform float speed = -0.3;
+
+// Width of the rainbow stripes (affects how many stripes fit across the sprite width)
+uniform float stripe_width = 5.2;
+
+// Control the size of the pixelation (the larger the value, the more pixelated it looks)
+uniform float pixel_size = 8.0;
+
+uniform bool enabled = false;
+
+void fragment() {
+	if(enabled)
+	{
+	    // Get the UV coordinates (position on the sprite)
+	    vec2 uv = UV;
+
+	    // Snap UVs to create the pixelation effect
+	    uv = floor(uv * pixel_size) / pixel_size;
+		
+	    // Calculate time-based shift for rotating the colors
+	    float time_shift = TIME * speed;
+
+	    // Calculate the hue using sine waves and UV coordinates to create the horizontal stripes
+	    float hue = fract(uv.y / stripe_width + time_shift);
+
+	    // Convert hue to RGB for the rainbow effect
+	    vec3 color = vec3(abs(sin(hue * 6.28318)), abs(sin((hue + 0.33) * 6.28318)), abs(sin((hue + 0.66) * 6.28318)));
+
+	    // Get the original sprite's alpha for transparency
+	    vec4 texture_color = texture(TEXTURE, UV);
+
+	    // Output the final color with the original sprite's alpha
+	    COLOR = vec4(color, texture_color.a);
+	}
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_apyn1"]
+shader = SubResource("Shader_hyqkx")
+shader_parameter/speed = -0.3
+shader_parameter/stripe_width = 5.2
+shader_parameter/pixel_size = 8.0
+shader_parameter/enabled = false
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_grj4f"]
+shader = SubResource("Shader_hyqkx")
+shader_parameter/speed = -0.3
+shader_parameter/stripe_width = 5.2
+shader_parameter/pixel_size = 8.0
+shader_parameter/enabled = false
+
+[sub_resource type="Shader" id="Shader_vg6rp"]
+code = "shader_type canvas_item;
+
+// Speed of the color rotation (settable from the editor)
+uniform float speed = -0.3;
+
+// Width of the rainbow stripes (affects how many stripes fit across the sprite width)
+uniform float stripe_width = 5.2;
+
+// Control the size of the pixelation (the larger the value, the more pixelated it looks)
+uniform float pixel_size = 8.0;
+
+uniform bool enabled = false;
+
+void fragment() {
+	if(enabled)
+	{
+	    // Get the UV coordinates (position on the sprite)
+	    vec2 uv = UV;
+
+	    // Snap UVs to create the pixelation effect
+	    uv = floor(uv * pixel_size) / pixel_size;
+		
+	    // Calculate time-based shift for rotating the colors
+	    float time_shift = TIME * speed;
+
+	    // Calculate the hue using sine waves and UV coordinates to create the horizontal stripes
+	    float hue = fract(uv.y / stripe_width + time_shift);
+
+	    // Convert hue to RGB for the rainbow effect
+	    vec3 color = vec3(abs(sin(hue * 6.28318)), abs(sin((hue + 0.33) * 6.28318)), abs(sin((hue + 0.66) * 6.28318)));
+
+	    // Get the original sprite's alpha for transparency
+	    vec4 texture_color = texture(TEXTURE, UV);
+
+	    // Output the final color with the original sprite's alpha
+	    COLOR = vec4(color, texture_color.a);
+	}
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0fp1o"]
+shader = SubResource("Shader_vg6rp")
+shader_parameter/speed = -0.3
+shader_parameter/stripe_width = 5.2
+shader_parameter/pixel_size = 8.0
+shader_parameter/enabled = false
 
 [node name="Game" type="Node2D"]
 process_mode = 1
@@ -20,6 +196,8 @@ script = ExtResource("1_ermoe")
 pipe_scene = ExtResource("5_4efw6")
 missile_scene = ExtResource("3_adulu")
 ammo_scene = ExtResource("5_6gf1k")
+frog_scene = ExtResource("5_tt1gm")
+betrothed_frog_scene = ExtResource("6_nl2av")
 
 [node name="Bird" parent="." instance=ExtResource("3_abk4j")]
 position = Vector2(-416, 0)
@@ -49,6 +227,10 @@ autostart = true
 wait_time = 1.5
 autostart = true
 
+[node name="FrogTimer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
 [node name="PowerUps" type="Node2D" parent="."]
 
 [node name="Reference" type="Node2D" parent="."]
@@ -62,6 +244,7 @@ position = Vector2(490, -50)
 [node name="Missiles" type="Node2D" parent="."]
 
 [node name="HUD" type="Control" parent="."]
+z_index = 10
 layout_mode = 3
 anchors_preset = 0
 offset_left = -909.0
@@ -121,15 +304,53 @@ offset_right = 85.1111
 offset_bottom = 16.0
 texture = ExtResource("5_i0i7u")
 
+[node name="Frog" type="Control" parent="HUD"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="HUD/Frog"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_f3wih")
+position = Vector2(1332.22, -778)
+sprite_frames = SubResource("SpriteFrames_qoix6")
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="HUD/Frog"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_wpahs")
+position = Vector2(1398.89, -778)
+sprite_frames = SubResource("SpriteFrames_qoix6")
+
+[node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="HUD/Frog"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_apyn1")
+position = Vector2(1465.56, -778)
+sprite_frames = SubResource("SpriteFrames_qoix6")
+
+[node name="AnimatedSprite2D4" type="AnimatedSprite2D" parent="HUD/Frog"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_grj4f")
+position = Vector2(1532.22, -778)
+sprite_frames = SubResource("SpriteFrames_qoix6")
+
+[node name="AnimatedSprite2D5" type="AnimatedSprite2D" parent="HUD/Frog"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_0fp1o")
+position = Vector2(1598.89, -778)
+sprite_frames = SubResource("SpriteFrames_qoix6")
+
 [node name="LifeBar" parent="." instance=ExtResource("7_5v04i")]
+z_index = 10
 position = Vector2(-544, 286)
 
 [node name="Menu" parent="." instance=ExtResource("8_ba5wn")]
 visible = false
 
 [connection signal="collected_ammo" from="Bird" to="." method="_on_bird_collected_ammo"]
+[connection signal="frog_launched" from="Bird" to="." method="_on_bird_frog_launched"]
 [connection signal="missile_launched" from="Bird" to="." method="_on_bird_missile_launched"]
 [connection signal="took_damage" from="Bird" to="." method="_on_bird_took_damage"]
 [connection signal="timeout" from="PipeTimer" to="." method="_on_pipe_timer_timeout"]
 [connection signal="timeout" from="AmmoTimer" to="." method="_on_ammo_timer_timeout"]
+[connection signal="timeout" from="FrogTimer" to="." method="_on_frog_timer_timeout"]
 [connection signal="game_start" from="Menu" to="." method="_on_menu_game_start"]

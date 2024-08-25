@@ -10,10 +10,14 @@ config_version=5
 
 [application]
 
-config/name="Solo Dev Game Jam 4"
+config/name="Flapple: Missiles and Marriage"
 run/main_scene="res://game.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.svg"
+
+[autoload]
+
+GM="*res://gm.tscn"
 
 [editor_plugins]
 

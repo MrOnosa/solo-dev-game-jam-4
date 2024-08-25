@@ -1,7 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://cbaa2gbqceacn"]
+[gd_scene load_steps=11 format=3 uid="uid://cbaa2gbqceacn"]
 
 [ext_resource type="Script" path="res://bird.gd" id="1_t3uc3"]
 [ext_resource type="Texture2D" uid="uid://8q2ea7gkt6kr" path="res://assets/bird-Sheet.png" id="2_lh7vx"]
+[ext_resource type="Texture2D" uid="uid://bi7r1juq2j515" path="res://assets/frog.png" id="2_n3gie"]
+[ext_resource type="Shader" path="res://rainbow.gdshader" id="3_m11j2"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_urh8x"]
 atlas = ExtResource("2_lh7vx")
@@ -28,8 +30,27 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_dgrsu"]
 radius = 116.031
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wku3k"]
+shader = ExtResource("3_m11j2")
+shader_parameter/speed = -0.3
+shader_parameter/stripe_width = 5.2
+shader_parameter/pixel_size = 8.0
+shader_parameter/enabled = false
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ymrep"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_n3gie")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
 [node name="Bird" type="RigidBody2D"]
 collision_layer = 3
+lock_rotation = true
 contact_monitor = true
 max_contacts_reported = 10
 script = ExtResource("1_t3uc3")
@@ -46,8 +67,18 @@ rotation = 1.5708
 scale = Vector2(0.529171, 0.529171)
 shape = SubResource("CircleShape2D_dgrsu")
 
+[node name="SnatchedFrog" type="Node2D" parent="."]
+position = Vector2(5, 9)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="SnatchedFrog"]
+material = SubResource("ShaderMaterial_wku3k")
+position = Vector2(6, 65)
+rotation = 0.895281
+sprite_frames = SubResource("SpriteFrames_ymrep")
+
 [node name="Button1CooloffTimer" type="Timer" parent="."]
 wait_time = 0.3
+autostart = true
 
 [node name="Button2CooloffTimer" type="Timer" parent="."]
 
