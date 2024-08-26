@@ -16,10 +16,15 @@ var total_frogs_widowed := 0
 # missiles fired
 var total_missiles_fired := 0
 
+var frog_marriage_statuses : Array[int] # 0 - Bachelor. 1 - Married. 2 - Super Married
+
+var global_timer := 0.0
+var ending_hp := 0
+var victory := false
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -31,3 +36,6 @@ func reset() -> void:
 	total_frogs_super_married = 0
 	total_frogs_widowed = 0
 	total_missiles_fired = 0
+	frog_marriage_statuses = [0,0,0,0,0]
+	global_timer = 0.0
+	victory = false

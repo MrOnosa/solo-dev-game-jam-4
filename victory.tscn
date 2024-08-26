@@ -1,0 +1,402 @@
+[gd_scene load_steps=28 format=3 uid="uid://ctiscvtkjego6"]
+
+[ext_resource type="Script" path="res://victory.gd" id="1_an4gg"]
+[ext_resource type="Texture2D" uid="uid://d31ejslsw8kso" path="res://assets/menu-frame.png" id="1_v3esq"]
+[ext_resource type="Texture2D" uid="uid://do6fdojhn36pt" path="res://assets/victory_bird-Sheet.png" id="2_blpyp"]
+[ext_resource type="Texture2D" uid="uid://c4tqw6a11yj4p" path="res://assets/frog-outline.png" id="3_s1boq"]
+[ext_resource type="Shader" path="res://rainbow.gdshader" id="3_vs2oh"]
+[ext_resource type="Texture2D" uid="uid://ccktqpccapld" path="res://assets/frog-blushing.png" id="4_wqy0m"]
+[ext_resource type="Texture2D" uid="uid://ysd832a6ih3b" path="res://assets/computer-mouse-Sheet.png" id="9_u3gie"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hd2ud"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_v3esq")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_neprw"]
+shader = ExtResource("3_vs2oh")
+shader_parameter/speed = -0.3
+shader_parameter/stripe_width = 5.2
+shader_parameter/pixel_size = 8.0
+shader_parameter/enabled = false
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kjd68"]
+atlas = ExtResource("2_blpyp")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bu401"]
+atlas = ExtResource("2_blpyp")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_shr3e"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kjd68")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bu401")
+}],
+"loop": true,
+"name": &"default",
+"speed": 4.0
+}]
+
+[sub_resource type="Shader" id="Shader_jidby"]
+code = "shader_type canvas_item;
+
+// Speed of the color rotation (settable from the editor)
+uniform float speed = -0.3;
+
+// Width of the rainbow stripes (affects how many stripes fit across the sprite width)
+uniform float stripe_width = 5.2;
+
+// Control the size of the pixelation (the larger the value, the more pixelated it looks)
+uniform float pixel_size = 8.0;
+
+uniform bool enabled = false;
+
+void fragment() {
+	if(enabled)
+	{
+	    // Get the UV coordinates (position on the sprite)
+	    vec2 uv = UV;
+
+	    // Snap UVs to create the pixelation effect
+	    uv = floor(uv * pixel_size) / pixel_size;
+		
+	    // Calculate time-based shift for rotating the colors
+	    float time_shift = TIME * speed;
+
+	    // Calculate the hue using sine waves and UV coordinates to create the horizontal stripes
+	    float hue = fract(uv.y / stripe_width + time_shift);
+
+	    // Convert hue to RGB for the rainbow effect
+	    vec3 color = vec3(abs(sin(hue * 6.28318)), abs(sin((hue + 0.33) * 6.28318)), abs(sin((hue + 0.66) * 6.28318)));
+
+	    // Get the original sprite's alpha for transparency
+	    vec4 texture_color = texture(TEXTURE, UV);
+
+	    // Output the final color with the original sprite's alpha
+	    COLOR = vec4(color, texture_color.a);
+	}
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ainfr"]
+shader = SubResource("Shader_jidby")
+shader_parameter/speed = -0.3
+shader_parameter/stripe_width = 5.2
+shader_parameter/pixel_size = 8.0
+shader_parameter/enabled = false
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1evd2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_s1boq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_wqy0m")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ni7hy"]
+shader = SubResource("Shader_jidby")
+shader_parameter/speed = -0.3
+shader_parameter/stripe_width = 5.2
+shader_parameter/pixel_size = 8.0
+shader_parameter/enabled = false
+
+[sub_resource type="Shader" id="Shader_hyqkx"]
+code = "shader_type canvas_item;
+
+// Speed of the color rotation (settable from the editor)
+uniform float speed = -0.3;
+
+// Width of the rainbow stripes (affects how many stripes fit across the sprite width)
+uniform float stripe_width = 5.2;
+
+// Control the size of the pixelation (the larger the value, the more pixelated it looks)
+uniform float pixel_size = 8.0;
+
+uniform bool enabled = false;
+
+void fragment() {
+	if(enabled)
+	{
+	    // Get the UV coordinates (position on the sprite)
+	    vec2 uv = UV;
+
+	    // Snap UVs to create the pixelation effect
+	    uv = floor(uv * pixel_size) / pixel_size;
+		
+	    // Calculate time-based shift for rotating the colors
+	    float time_shift = TIME * speed;
+
+	    // Calculate the hue using sine waves and UV coordinates to create the horizontal stripes
+	    float hue = fract(uv.y / stripe_width + time_shift);
+
+	    // Convert hue to RGB for the rainbow effect
+	    vec3 color = vec3(abs(sin(hue * 6.28318)), abs(sin((hue + 0.33) * 6.28318)), abs(sin((hue + 0.66) * 6.28318)));
+
+	    // Get the original sprite's alpha for transparency
+	    vec4 texture_color = texture(TEXTURE, UV);
+
+	    // Output the final color with the original sprite's alpha
+	    COLOR = vec4(color, texture_color.a);
+	}
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5upw3"]
+shader = SubResource("Shader_hyqkx")
+shader_parameter/speed = -0.3
+shader_parameter/stripe_width = 5.2
+shader_parameter/pixel_size = 8.0
+shader_parameter/enabled = false
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4dieb"]
+shader = SubResource("Shader_hyqkx")
+shader_parameter/speed = -0.3
+shader_parameter/stripe_width = 5.2
+shader_parameter/pixel_size = 8.0
+shader_parameter/enabled = false
+
+[sub_resource type="Shader" id="Shader_vg6rp"]
+code = "shader_type canvas_item;
+
+// Speed of the color rotation (settable from the editor)
+uniform float speed = -0.3;
+
+// Width of the rainbow stripes (affects how many stripes fit across the sprite width)
+uniform float stripe_width = 5.2;
+
+// Control the size of the pixelation (the larger the value, the more pixelated it looks)
+uniform float pixel_size = 8.0;
+
+uniform bool enabled = false;
+
+void fragment() {
+	if(enabled)
+	{
+	    // Get the UV coordinates (position on the sprite)
+	    vec2 uv = UV;
+
+	    // Snap UVs to create the pixelation effect
+	    uv = floor(uv * pixel_size) / pixel_size;
+		
+	    // Calculate time-based shift for rotating the colors
+	    float time_shift = TIME * speed;
+
+	    // Calculate the hue using sine waves and UV coordinates to create the horizontal stripes
+	    float hue = fract(uv.y / stripe_width + time_shift);
+
+	    // Convert hue to RGB for the rainbow effect
+	    vec3 color = vec3(abs(sin(hue * 6.28318)), abs(sin((hue + 0.33) * 6.28318)), abs(sin((hue + 0.66) * 6.28318)));
+
+	    // Get the original sprite's alpha for transparency
+	    vec4 texture_color = texture(TEXTURE, UV);
+
+	    // Output the final color with the original sprite's alpha
+	    COLOR = vec4(color, texture_color.a);
+	}
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hrrhl"]
+shader = SubResource("Shader_vg6rp")
+shader_parameter/speed = -0.3
+shader_parameter/stripe_width = 5.2
+shader_parameter/pixel_size = 8.0
+shader_parameter/enabled = false
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oipv3"]
+atlas = ExtResource("9_u3gie")
+region = Rect2(0, 0, 215, 215)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r3ot1"]
+atlas = ExtResource("9_u3gie")
+region = Rect2(645, 0, 215, 215)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8o56m"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oipv3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r3ot1")
+}],
+"loop": true,
+"name": &"default",
+"speed": 1.0
+}]
+
+[sub_resource type="Animation" id="Animation_k6qw1"]
+resource_name = "mouse"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ComputerMouse:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_4t28y"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ComputerMouse:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jwe4w"]
+_data = {
+"RESET": SubResource("Animation_4t28y"),
+"mouse": SubResource("Animation_k6qw1")
+}
+
+[node name="Victory" type="CanvasLayer"]
+script = ExtResource("1_an4gg")
+
+[node name="Frame" type="AnimatedSprite2D" parent="."]
+position = Vector2(581, 252)
+sprite_frames = SubResource("SpriteFrames_hd2ud")
+
+[node name="Bird" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+material = SubResource("ShaderMaterial_neprw")
+position = Vector2(570, 230)
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_shr3e")
+autoplay = "default"
+frame_progress = 0.195596
+
+[node name="Frog" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -900.0
+offset_top = 1140.0
+offset_right = -860.0
+offset_bottom = 1180.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Frog"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_ainfr")
+position = Vector2(1360, -1010)
+sprite_frames = SubResource("SpriteFrames_1evd2")
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="Frog"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_ni7hy")
+position = Vector2(1328, -890)
+sprite_frames = SubResource("SpriteFrames_1evd2")
+
+[node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="Frog"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_5upw3")
+position = Vector2(1465.56, -778)
+sprite_frames = SubResource("SpriteFrames_1evd2")
+
+[node name="AnimatedSprite2D4" type="AnimatedSprite2D" parent="Frog"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_4dieb")
+position = Vector2(1630, -890)
+sprite_frames = SubResource("SpriteFrames_1evd2")
+
+[node name="AnimatedSprite2D5" type="AnimatedSprite2D" parent="Frog"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_hrrhl")
+position = Vector2(1580, -1010)
+sprite_frames = SubResource("SpriteFrames_1evd2")
+
+[node name="TimeLabel" type="Label" parent="."]
+offset_left = 183.0
+offset_top = 420.0
+offset_right = 511.0
+offset_bottom = 443.0
+text = "You completed the game in 32.22 seconds."
+
+[node name="MissilesLabel" type="Label" parent="."]
+offset_left = 183.0
+offset_top = 90.0
+offset_right = 346.0
+offset_bottom = 113.0
+text = "32 Missiles Launched"
+
+[node name="FrogsBetrothedLabel" type="Label" parent="."]
+offset_left = 183.0
+offset_top = 120.0
+offset_right = 346.0
+offset_bottom = 143.0
+text = "5 Frogs Betrothed
+"
+
+[node name="FrogsWidoweed" type="Label" parent="."]
+offset_left = 183.0
+offset_top = 150.0
+offset_right = 346.0
+offset_bottom = 173.0
+text = "1 Frogs Widowed"
+
+[node name="CanRestartTimer" type="Timer" parent="."]
+process_mode = 2
+wait_time = 3.0
+one_shot = true
+autostart = true
+
+[node name="Label" type="Label" parent="."]
+offset_left = 640.0
+offset_top = 380.0
+offset_right = 849.0
+offset_bottom = 403.0
+text = "Created By: Captain_Onosa"
+
+[node name="Label2" type="Label" parent="."]
+offset_left = 640.0
+offset_top = 403.0
+offset_right = 913.0
+offset_bottom = 426.0
+text = "Created For: Solo Dev Game Jam #4"
+
+[node name="Label3" type="Label" parent="."]
+offset_left = 640.0
+offset_top = 426.0
+offset_right = 913.0
+offset_bottom = 449.0
+text = "Font: Xolonium by Severin Meyer"
+
+[node name="ComputerMouse" type="AnimatedSprite2D" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+position = Vector2(880, 240)
+sprite_frames = SubResource("SpriteFrames_8o56m")
+autoplay = "default"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_jwe4w")
+}
+
+[connection signal="timeout" from="CanRestartTimer" to="." method="_on_can_restart_timer_timeout"]

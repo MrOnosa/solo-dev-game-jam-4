@@ -23,6 +23,10 @@ GM="*res://gm.tscn"
 
 enabled=PackedStringArray("res://addons/kanban_tasks/plugin.cfg", "res://addons/ridiculous_coding/plugin.cfg")
 
+[gui]
+
+theme/custom_font="res://fonts/Xolonium-Regular.ttf"
+
 [input]
 
 Button1={

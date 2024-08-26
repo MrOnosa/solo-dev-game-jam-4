@@ -82,7 +82,6 @@ position = Vector2(570, 230)
 scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_cmimj")
 autoplay = "default"
-frame = 1
 frame_progress = 0.604388
 
 [node name="Arrow" type="Sprite2D" parent="."]

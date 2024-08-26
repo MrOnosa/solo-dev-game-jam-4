@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://bevcht6q7x2cs"]
+[gd_scene load_steps=25 format=3 uid="uid://bevcht6q7x2cs"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_ermoe"]
 [ext_resource type="PackedScene" uid="uid://cbaa2gbqceacn" path="res://bird.tscn" id="3_abk4j"]
@@ -12,13 +12,14 @@
 [ext_resource type="PackedScene" uid="uid://c2jlw5xgv0d0d" path="res://menu.tscn" id="8_ba5wn"]
 [ext_resource type="Texture2D" uid="uid://c4tqw6a11yj4p" path="res://assets/frog-outline.png" id="9_8h7oe"]
 [ext_resource type="Texture2D" uid="uid://ccktqpccapld" path="res://assets/frog-blushing.png" id="10_2grpk"]
+[ext_resource type="PackedScene" uid="uid://ctiscvtkjego6" path="res://victory.tscn" id="12_qnxfd"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_1kw80"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ytymf"]
 distance = 1.0
 
-[sub_resource type="Shader" id="Shader_jidby"]
+[sub_resource type="Shader" id="Shader_fi4qs"]
 code = "shader_type canvas_item;
 
 // Speed of the color rotation (settable from the editor)
@@ -60,7 +61,7 @@ void fragment() {
 "
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_f3wih"]
-shader = SubResource("Shader_jidby")
+shader = SubResource("Shader_fi4qs")
 shader_parameter/speed = -0.3
 shader_parameter/stripe_width = 5.2
 shader_parameter/pixel_size = 8.0
@@ -81,13 +82,13 @@ animations = [{
 }]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wpahs"]
-shader = SubResource("Shader_jidby")
+shader = SubResource("Shader_fi4qs")
 shader_parameter/speed = -0.3
 shader_parameter/stripe_width = 5.2
 shader_parameter/pixel_size = 8.0
 shader_parameter/enabled = false
 
-[sub_resource type="Shader" id="Shader_hyqkx"]
+[sub_resource type="Shader" id="Shader_qn4r2"]
 code = "shader_type canvas_item;
 
 // Speed of the color rotation (settable from the editor)
@@ -129,20 +130,20 @@ void fragment() {
 "
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_apyn1"]
-shader = SubResource("Shader_hyqkx")
+shader = SubResource("Shader_qn4r2")
 shader_parameter/speed = -0.3
 shader_parameter/stripe_width = 5.2
 shader_parameter/pixel_size = 8.0
 shader_parameter/enabled = false
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_grj4f"]
-shader = SubResource("Shader_hyqkx")
+shader = SubResource("Shader_qn4r2")
 shader_parameter/speed = -0.3
 shader_parameter/stripe_width = 5.2
 shader_parameter/pixel_size = 8.0
 shader_parameter/enabled = false
 
-[sub_resource type="Shader" id="Shader_vg6rp"]
+[sub_resource type="Shader" id="Shader_thqoq"]
 code = "shader_type canvas_item;
 
 // Speed of the color rotation (settable from the editor)
@@ -184,7 +185,7 @@ void fragment() {
 "
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0fp1o"]
-shader = SubResource("Shader_vg6rp")
+shader = SubResource("Shader_thqoq")
 shader_parameter/speed = -0.3
 shader_parameter/stripe_width = 5.2
 shader_parameter/pixel_size = 8.0
@@ -230,6 +231,9 @@ autostart = true
 [node name="FrogTimer" type="Timer" parent="."]
 wait_time = 2.0
 autostart = true
+
+[node name="VictoryTimer" type="Timer" parent="."]
+wait_time = 1.3
 
 [node name="PowerUps" type="Node2D" parent="."]
 
@@ -343,6 +347,10 @@ sprite_frames = SubResource("SpriteFrames_qoix6")
 z_index = 10
 position = Vector2(-544, 286)
 
+[node name="Victory" parent="." instance=ExtResource("12_qnxfd")]
+process_mode = 2
+visible = false
+
 [node name="Menu" parent="." instance=ExtResource("8_ba5wn")]
 visible = false
 
@@ -353,4 +361,5 @@ visible = false
 [connection signal="timeout" from="PipeTimer" to="." method="_on_pipe_timer_timeout"]
 [connection signal="timeout" from="AmmoTimer" to="." method="_on_ammo_timer_timeout"]
 [connection signal="timeout" from="FrogTimer" to="." method="_on_frog_timer_timeout"]
+[connection signal="timeout" from="VictoryTimer" to="." method="_on_victory_timer_timeout"]
 [connection signal="game_start" from="Menu" to="." method="_on_menu_game_start"]

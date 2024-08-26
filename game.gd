@@ -11,7 +11,7 @@ var global : gm
 
 var inital_pipe_position : Vector2 = Vector2(600.0, 304.0)
 var ammo = 0
-var hp = 50
+var hp = 6
 var frog_marriage_statuses : Array[int] # 0 - Bachelor. 1 - Married. 2 - Super Married
 
 @onready var bird: Bird = $Bird
@@ -22,8 +22,10 @@ var frog_marriage_statuses : Array[int] # 0 - Bachelor. 1 - Married. 2 - Super M
 @onready var frog_control: Control = $HUD/Frog
 @onready var pipe_timer: Timer = $PipeTimer
 @onready var ammo_timer: Timer = $AmmoTimer
+@onready var victory_timer: Timer = $VictoryTimer
 @onready var life_bar: LifeBar = $LifeBar
 @onready var menu: CanvasLayer = $Menu
+@onready var victory: CanvasLayer = $Victory
 @onready var hud: Control = $HUD
 
 
@@ -42,6 +44,8 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	global.global_timer += delta
+	
 	var ammo_textures = ammo_control.get_children()
 	var ammo_index = 0
 	for texture in ammo_textures:
@@ -68,6 +72,7 @@ func _get_frog_frame(status : int):
 		#Bachelor
 		return 0
 	return 1
+	
 func _on_pipe_died() -> void:
 	pass
 
@@ -116,12 +121,11 @@ func _on_ammo_timer_timeout() -> void:
 
 
 func _on_bird_took_damage() -> void:
-	hp -= 1
-	life_bar.paint(hp)
-	if hp <= 0:
-		get_tree().reload_current_scene()
-		
-	pass # Replace with function body.
+	if !global.victory:
+		hp -= 1
+		life_bar.paint(hp)
+		if hp <= 0:
+			get_tree().reload_current_scene()
 
 func _on_menu_game_start() -> void:	
 	life_bar.visible = true
@@ -157,6 +161,15 @@ func _on_frog_married(super_married: bool) -> void:
 			frog_index = 999
 		frog_index += 1
 	
-	if frog_index == 5:
-		print_rich("[font-size=32] Victory")
+	if frog_marriage_statuses[4] != 0:
+		global.frog_marriage_statuses = frog_marriage_statuses.duplicate()
+		global.ending_hp = hp
+		global.victory = true
+		print_rich("Victory")
+		victory_timer.start()
 	pass
+
+func _on_victory_timer_timeout() -> void:
+	victory.visible = true
+	(victory as Victory).setup()
+	get_tree().paused = true

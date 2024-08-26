@@ -97,7 +97,7 @@ libraries = {
 one_shot = true
 
 [node name="BonusTimer" type="Timer" parent="."]
-wait_time = 99.0
+wait_time = 5.0
 one_shot = true
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
