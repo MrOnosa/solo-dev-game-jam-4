@@ -7,6 +7,7 @@ const height := 1000.0
 var was_ever_on_screen := false
 var hit_by_missile := false
 var hit_by_bird := false
+var hit_by_anything := false
 @onready var death_clock_timer: Timer = $DeathClockTimer
 
 # Called when the node enters the scene tree for the first time.
@@ -33,15 +34,15 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 
 func _on_death_clock_timer_timeout() -> void:	
 	#Doom Doom Deadoes!! 💀
+	$AnimationPlayer.play("fade")
+
+func _on_fade_out_complete() -> void:
 	died.emit()
-	queue_free()
+	queue_free()	
 	
 func _on_body_entered(body: Node) -> void:
-	if body is Missile:
-		hit_by_missile = true
-		#collision_mask = 0b0000
-		#collision_layer = 0b0000
-	if body is Bird:
-		hit_by_bird = true
-		#collision_mask = 0b0000
-		#collision_layer = 0b0000
+	if body is Missile || body is Bird || body is Pipe:
+		$AnimatedSprite2D.frame = 1
+		if !hit_by_anything:
+			death_clock_timer.start()
+		hit_by_anything = true

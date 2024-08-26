@@ -242,21 +242,6 @@ animations = [{
 "speed": 1.0
 }]
 
-[sub_resource type="Animation" id="Animation_k6qw1"]
-resource_name = "mouse"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ComputerMouse:self_modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.7),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
-}
-
 [sub_resource type="Animation" id="Animation_4t28y"]
 length = 0.001
 tracks/0/type = "value"
@@ -270,6 +255,21 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_k6qw1"]
+resource_name = "mouse"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ComputerMouse:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_jwe4w"]
@@ -305,7 +305,7 @@ offset_bottom = 1180.0
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Frog"]
 texture_filter = 1
 material = SubResource("ShaderMaterial_ainfr")
-position = Vector2(1360, -1010)
+position = Vector2(1380, -1010)
 sprite_frames = SubResource("SpriteFrames_1evd2")
 
 [node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="Frog"]
@@ -317,19 +317,19 @@ sprite_frames = SubResource("SpriteFrames_1evd2")
 [node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="Frog"]
 texture_filter = 1
 material = SubResource("ShaderMaterial_5upw3")
-position = Vector2(1465.56, -778)
+position = Vector2(1473, -792)
 sprite_frames = SubResource("SpriteFrames_1evd2")
 
 [node name="AnimatedSprite2D4" type="AnimatedSprite2D" parent="Frog"]
 texture_filter = 1
 material = SubResource("ShaderMaterial_4dieb")
-position = Vector2(1630, -890)
+position = Vector2(1620, -890)
 sprite_frames = SubResource("SpriteFrames_1evd2")
 
 [node name="AnimatedSprite2D5" type="AnimatedSprite2D" parent="Frog"]
 texture_filter = 1
 material = SubResource("ShaderMaterial_hrrhl")
-position = Vector2(1580, -1010)
+position = Vector2(1570, -1007)
 sprite_frames = SubResource("SpriteFrames_1evd2")
 
 [node name="TimeLabel" type="Label" parent="."]
@@ -368,24 +368,24 @@ one_shot = true
 autostart = true
 
 [node name="Label" type="Label" parent="."]
-offset_left = 640.0
-offset_top = 380.0
-offset_right = 849.0
-offset_bottom = 403.0
+offset_left = 660.0
+offset_top = 370.0
+offset_right = 892.0
+offset_bottom = 393.0
 text = "Created By: Captain_Onosa"
 
 [node name="Label2" type="Label" parent="."]
-offset_left = 640.0
-offset_top = 403.0
-offset_right = 913.0
-offset_bottom = 426.0
+offset_left = 660.0
+offset_top = 393.0
+offset_right = 970.0
+offset_bottom = 416.0
 text = "Created For: Solo Dev Game Jam #4"
 
 [node name="Label3" type="Label" parent="."]
-offset_left = 640.0
-offset_top = 426.0
-offset_right = 913.0
-offset_bottom = 449.0
+offset_left = 660.0
+offset_top = 416.0
+offset_right = 940.0
+offset_bottom = 439.0
 text = "Font: Xolonium by Severin Meyer"
 
 [node name="ComputerMouse" type="AnimatedSprite2D" parent="."]

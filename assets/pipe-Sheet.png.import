@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ddrgx6ro08nr7"
-path="res://.godot/imported/ChickBase_400_1.png-bcf87a09ba457c16b14419d24405ed77.ctex"
+uid="uid://bfjvsmbula52t"
+path="res://.godot/imported/pipe-Sheet.png-939d375fd512f16676608bea034a06e1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/REPLACE_ME/ChickBase_400_1.png"
-dest_files=["res://.godot/imported/ChickBase_400_1.png-bcf87a09ba457c16b14419d24405ed77.ctex"]
+source_file="res://assets/pipe-Sheet.png"
+dest_files=["res://.godot/imported/pipe-Sheet.png-939d375fd512f16676608bea034a06e1.ctex"]
 
 [params]
 
